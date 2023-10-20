@@ -216,3 +216,69 @@ footer nav ul {
 	margin: 2em
 }
 
+/****** Formulaire connexion***********/
+
+.connexion{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap:20px;
+}
+
+.form-connexion{
+	padding-top: 20px;
+	font-family: 'Work Sans';
+	display: flex;
+	flex-direction: column;
+	justify-content: center;	
+	gap: 10px;
+	width: 350px;
+
+}
+#email{
+	box-shadow: 0px 4px 14px 0px #00000017;
+	border: none;
+	height: 35px;
+}
+ .form-mdp{
+	box-shadow: 0px 4px 14px 0px #00000017;
+	border: none;
+	height: 35px;
+	
+}
+
+.btn-connexion{
+	font-family: 'Syne';
+	border: solid #1D6154 1px;
+	background-color:#1D6154;
+	color: white;
+	border-radius: 20px 20px 20px 20px;
+	font-size: 14px;
+	height: 35px;
+	cursor: pointer;
+	width: 150px;
+	margin-left: 100px;
+	
+}
+
+.btn-connexion:hover{
+	background-color: white;
+	color: #1D6154;
+}
+.connexion{
+height: 600px;
+margin-bottom: 150px;
+}
+
+.forget-mdp{
+	color: #3D3D3D;
+	text-decoration: underline solid #3D3D3D;
+	;
+}
+a{
+	text-decoration: none;
+}
+a:hover{
+	cursor: pointer;
+}
