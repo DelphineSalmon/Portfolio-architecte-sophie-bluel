@@ -281,4 +281,15 @@ a{
 }
 a:hover{
 	cursor: pointer;
+	color: #B1663C;
+}
+.modif-login {
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	
+}
+
+.modif{
+	padding-top: 10px;
 }

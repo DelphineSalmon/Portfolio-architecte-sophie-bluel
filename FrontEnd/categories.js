@@ -14,15 +14,20 @@ for (const category of categories){
 }
 
 function displayFilter(category){
-    const categoryElement = document.createElement("button")
-    categoryElement.innerText = category.name
-    // TODO Rajout class pour css 
-    categoryElement.classList.add('button-filters')
-    sectionFiltres.appendChild(categoryElement)
-    categoryElement.addEventListener("click", function(event){
-        displayWorks(category.id)
-
-    })
+    const token = window.localStorage.getItem("token")
+    if(!token){
+        const categoryElement = document.createElement("button")
+        categoryElement.innerText = category.name
+        // TODO Rajout class pour css 
+        categoryElement.classList.add('button-filters')
+        sectionFiltres.appendChild(categoryElement)
+        categoryElement.addEventListener("click", function(event){
+            displayWorks(category.id)
+    
+    
+        })
+    }
+    
 }
 
 

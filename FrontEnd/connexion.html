@@ -12,6 +12,7 @@
         />
         <meta name="description" content="" />
         <link rel="stylesheet" href="./assets/style.css" />
+        <script type="module" src="connexion.js" defer></script>
     </head>
     <body>
         <header>
@@ -33,19 +34,13 @@
         <main>
             <div class="connexion">
                 <h2>Log In</h2>
+                <div class="error-message"></div>
                 <form class="form-connexion">
                     <label class="email" for="email">E-mail</label>
                     <input type="text" id="email" name="email" /><br>
-                    <label for="password" class="form-label"
-                        >Mot de passe</label
-                    >
-                    <input
-                        type="password"
-                        class="form-mdp"
-                        id="password"
-                        name="password"
-                    /><br>
-                    <button type="submit" class="btn-connexion">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-mdp" id="password" name="password"/ required ><br>
+                    <button type="submit" id="connexion" class ="btn-connexion">
                         Se connecter
                     </button>
                 </form>
