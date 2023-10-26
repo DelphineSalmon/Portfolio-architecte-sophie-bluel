@@ -3,8 +3,8 @@ const reponse = await fetch('http://localhost:5678/api/works');
 const works = await reponse.json();
 
 // Création des projets
-export function displayWorks(categoryId){
-    const sectionPotfolio = document.querySelector(".gallery")
+export function displayWorks(sellector, categoryId){
+    const sectionPotfolio = document.querySelector(sellector)
     sectionPotfolio.innerHTML = ""
     for (const work of works){
         if (work.categoryId === categoryId || categoryId === undefined){
@@ -22,4 +22,5 @@ export function displayWorks(categoryId){
     }
 }
 
-displayWorks()
+
+displayWorks(".gallery")

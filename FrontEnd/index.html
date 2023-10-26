@@ -10,30 +10,28 @@
             href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
             rel="stylesheet"
         />
-		<link
+        <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
             integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
             crossorigin="anonymous"
-            referrerpolicy="no-referrer"/>
+            referrerpolicy="no-referrer"
+        />
         <meta name="description" content="" />
         <link rel="stylesheet" href="./assets/style.css" />
         <script type="module" src="works.js" defer></script>
         <script type="module" src="categories.js" defer></script>
-		<script type="module" src="admin.js" defer></script>
+        <script type="module" src="admin.js" defer></script>
     </head>
     <body>
         <header>
-			<div class="barre-modif">
-				<p><a href="#"><i class="fa-regular fa-pen-to-square"></i>modifier</a></p>
-				<button>publier les changements</button>
-			</div>
-            <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-            <nav>
+            <div id ="barre-edit"></div>
+            <nav aria-label="navigation" class="barre-fixe">
+                <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
                 <ul>
-                    <li><a href="#portfolio">projets</a> </li>
+                    <li><a href="#portfolio">projets</a></li>
                     <li><a href="#contact">contact</a></li>
-                    <li class="log"><a href="connexion.html" >login</a> </li>
+                    <li class="log"><a href="connexion.html">login</a></li>
                     <li>
                         <img
                             src="./assets/icons/instagram.png"
@@ -45,8 +43,9 @@
         </header>
         <main>
             <section id="introduction">
-                <figure>
+                <figure class="profil-modif">
                     <img src="./assets/images/sophie-bluel.png" alt="" />
+                    <p class="modif-p"></p>
                 </figure>
                 <article>
                     <h2>Designer d'espace</h2>
@@ -70,10 +69,10 @@
                 </article>
             </section>
             <section id="portfolio">
-                <div class ="modif-login">
-					<h2>Mes Projets</h2>
-				<p class="modif"></p>
-				</div>
+                <div class="modif-login">
+                    <h2>Mes Projets</h2>
+                    <p class="modif"></p>
+                </div>
                 <div class="filters"></div>
                 <div class="gallery"></div>
             </section>
@@ -95,6 +94,74 @@
                     <input type="submit" value="Envoyer" />
                 </form>
             </section>
+			<!--Premiere Modale-->
+			<dialog id="add-remove" >
+				<div>
+				<button class="close" autofocus><i class="fa-solid fa-xmark fa-xl"></i></button>
+				<h2>Galerie Photo</h2>
+				<div class="gallery-modale">
+					<figure>
+						<div class="i-croix"><i class="fa-solid fa-up-down-left-right" style="color: #ffffff;"></i></div>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/appartement-paris-v.png" alt="Appartement Paris V">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/restaurant-sushisen-londres.png" alt="Restaurant Sushisen - Londres">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/la-balisiere.png" alt="Villa “La Balisiere” - Port Louis">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/structures-thermopolis.png" alt="Structures Thermopolis">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/appartement-paris-x.png" alt="Appartement Paris X">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/le-coteau-cassis.png" alt="Pavillon “Le coteau” - Cassis">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/villa-ferneze.png" alt="Villa Ferneze - Isola d’Elba">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/appartement-paris-xviii.png" alt="Appartement Paris XVIII">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/bar-lullaby-paris.png" alt="Bar “Lullaby” - Paris">
+						<figcaption>éditer</figcaption>
+					</figure>
+					<figure>
+						<i class="fa-solid fa-trash-can" style="color: #ffffff;"></i>
+						<img src="assets/images/hotel-first-arte-new-delhi.png" alt="Hotel First Arte - New Delhi">
+						<figcaption>éditer</figcaption>
+					</figure>
+				</div>
+				<div class="decor"></div>
+				<button class="btn-add">Ajouter une photo</button>
+				<p class="supp-gallery"><a href="#">supprimer la gallerie</a></p>
+			</div>
+			</dialog>
         </main>
 
         <footer>
