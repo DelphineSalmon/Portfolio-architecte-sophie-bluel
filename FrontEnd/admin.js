@@ -1,4 +1,5 @@
-import { displayWorks } from "./works.js";
+import { deleteWork } from "./delete.js";
+import { displayWorks, displayWorksModale } from "./works.js";
 //recuperation token dans localstorage
 
 const token = window.localStorage.getItem("token");
@@ -20,22 +21,72 @@ if (token) {
         window.localStorage.removeItem("token");
         window.location.reload();
     });
-
-    //Fermeture, et ouverture modale, faire modale en JS
-    const dialog = document.querySelector("dialog");
+    //ouverture modale, faire modale en JS
+   
     modifElement.addEventListener("click", () => {
+        const dialog = modaleGaleriePhoto(token);
         dialog.showModal();
-       //displayWorks(".gallery-modale");
+
     });
-    const closeButton = document.querySelector("dialog button");
-    // Le bouton "Fermer" et click a l'exterieur de la modale ferme le dialogue
-    closeButton.addEventListener("click", () => {
-        dialog.close();
+
+    
+   
+}
+//création modale
+function modaleGaleriePhoto(token) {
+    const modaleElement = document.getElementById("dialog-box");
+    const dialogElement = document.createElement("dialog");
+    dialogElement.id = "add-remove";
+
+    const dialogContentElement = document.createElement("div");
+    const closeElement = document.createElement("button");
+    closeElement.classList.add("close");
+
+    const iconeCloseElement = document.createElement("i");
+    iconeCloseElement.classList.add("fa-solid", "fa-xmark", "fa-xl");
+
+    const titleElement = document.createElement("h2");
+    titleElement.innerText = "Galerie Photo";
+
+    const galleryElement = document.createElement("div");
+    galleryElement.classList.add("gallery-modale");
+
+    const decoElement = document.createElement("div");
+    decoElement.classList.add("decor");
+
+    const addPhotoElement = document.createElement("button");
+    addPhotoElement.innerText = "Ajouter une photo";
+    addPhotoElement.classList.add("btn-add");
+
+    const suppElement = document.createElement("p");
+    suppElement.classList.add("supp-gallery");
+    const linkSuppElement = document.createElement("a");
+    linkSuppElement.innerText = "supprimer la gallerie";
+
+    modaleElement.appendChild(dialogElement);
+    dialogElement.appendChild(dialogContentElement);
+    dialogContentElement.appendChild(closeElement);
+    closeElement.appendChild(iconeCloseElement);
+    dialogContentElement.appendChild(titleElement);
+    dialogContentElement.appendChild(galleryElement);
+    dialogContentElement.appendChild(decoElement);
+    dialogContentElement.appendChild(addPhotoElement);
+    dialogContentElement.appendChild(suppElement);
+    suppElement.appendChild(linkSuppElement);
+
+    // fermeture modale avec croix et ext modale
+    closeElement.addEventListener("click", () => {
+        dialogElement.close();
+        modaleElement.innerHTML =""
     });
-    dialog.addEventListener("click",(event) =>{
-        if( event.target.id === "add-remove"){
-            dialog.close()
-            
+    dialogElement.addEventListener("click", (event) => {
+        if (event.target.id === "add-remove") {
+            dialogElement.close();
+            modaleElement.innerHTML =""
         }
-    })
+    });
+//creation gallery dans modale
+    displayWorksModale(token);
+
+    return dialogElement;
 }

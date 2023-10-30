@@ -351,7 +351,12 @@ dialog{
 	width: 500px;
 	border-radius: 10px;
 	border: #ffffff;
+	animation: fadein 0.7s both;
 
+}
+@keyframes fadein {
+	from { opacity: 0;}
+	to {opacity: 1;}
 }
 .close{
 	float: right;
@@ -360,6 +365,7 @@ dialog{
 	
  }
 dialog button .fa-solid{	
+	color: #000000;
 	margin:0;
 	border: 0px;
 	background-color: transparent;
@@ -388,6 +394,7 @@ dialog i {
 	position: absolute;
 	margin-left: 70px;
 	margin-top: 5px;
+	color: #ffffff;
 }
 dialog .i-croix {
 	position:absolute;
