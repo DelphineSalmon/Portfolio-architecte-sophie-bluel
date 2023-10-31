@@ -21,17 +21,36 @@ if (token) {
         window.localStorage.removeItem("token");
         window.location.reload();
     });
-    //ouverture modale, faire modale en JS
-   
+    //Ouverture modale
+
     modifElement.addEventListener("click", () => {
         const dialog = modaleGaleriePhoto(token);
         dialog.showModal();
+    });
+}
+function modaleAddPhoto(token) {
+    const dialogAddElement = document.getElementById("dialog-box-add");
+    const iconeCloseElement = document.querySelector(".icone-close");
+    const iconePrecedantElement = document.querySelector(".icone-precedant");
 
+    iconeCloseElement.addEventListener("click", () => {
+        dialogAddElement.close();
+    });
+    dialogAddElement.addEventListener("click", (event) => {
+        if (event.target.id === "dialog-box-add") {
+            dialogAddElement.close();
+        }
     });
 
-    
-   
+    iconePrecedantElement.addEventListener("click", () => {
+        const dialog = modaleGaleriePhoto(token);
+        dialog.showModal();
+        //TODO :clean div dialog (retire modale dans html)
+        dialogAddElement.close();
+    });
+    return dialogAddElement;
 }
+
 //création modale
 function modaleGaleriePhoto(token) {
     const modaleElement = document.getElementById("dialog-box");
@@ -57,6 +76,12 @@ function modaleGaleriePhoto(token) {
     const addPhotoElement = document.createElement("button");
     addPhotoElement.innerText = "Ajouter une photo";
     addPhotoElement.classList.add("btn-add");
+    addPhotoElement.addEventListener("click", () => {
+        const dialogAddElement = modaleAddPhoto(token);
+        dialogElement.close();
+        modaleElement.innerHTML = "";
+        dialogAddElement.showModal();
+    });
 
     const suppElement = document.createElement("p");
     suppElement.classList.add("supp-gallery");
@@ -74,18 +99,18 @@ function modaleGaleriePhoto(token) {
     dialogContentElement.appendChild(suppElement);
     suppElement.appendChild(linkSuppElement);
 
-    // fermeture modale avec croix et ext modale
+    // fermeture modale accueil avec croix et ext modale
     closeElement.addEventListener("click", () => {
         dialogElement.close();
-        modaleElement.innerHTML =""
+        modaleElement.innerHTML = "";
     });
     dialogElement.addEventListener("click", (event) => {
         if (event.target.id === "add-remove") {
             dialogElement.close();
-            modaleElement.innerHTML =""
+            modaleElement.innerHTML = "";
         }
     });
-//creation gallery dans modale
+    //creation gallery dans modale
     displayWorksModale(token);
 
     return dialogElement;
