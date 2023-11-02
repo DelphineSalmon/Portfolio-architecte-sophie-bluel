@@ -1,7 +1,7 @@
 import{deleteWork } from "./delete.js";
 // Récupération des projets depuis le ficher JSON//
 const reponse = await fetch('http://localhost:5678/api/works');
-const works = await reponse.json();
+ export const works = await reponse.json();
 
 // Affichage portfolio
 displayWorks(".gallery")
@@ -13,6 +13,7 @@ export function displayWorks(sellector, categoryId){
     for (const work of works){
         if (work.categoryId === categoryId || categoryId === undefined){
             const figureElement = document.createElement("figure")
+            figureElement.id = "figure_" + work.id
             const imageElement = document.createElement("img")
             imageElement.src = work.imageUrl
             const titleElement = document.createElement("figcaption")
@@ -29,7 +30,8 @@ export function displayWorks(sellector, categoryId){
 export function displayWorksModale( token){
     const sectionPortfolio = document.querySelector(".gallery-modale")
     sectionPortfolio.innerHTML = ""
-    for (const work of works){
+    for (let i=0; i< works.length ; i++ ){
+            const work = works[i];
             const figureElement = document.createElement("figure")
             const imageElement = document.createElement("img")
             imageElement.src = work.imageUrl
@@ -54,7 +56,12 @@ export function displayWorksModale( token){
 
                 const resultDelete = deleteWork(work.id, token)
                 if (resultDelete ){
-                    figureElement.remove()
+                    figureElement.remove();
+                    const deleteFigure = document.getElementById("figure_" + work.id);
+                    deleteFigure.remove();
+                    works.splice(i,1);
+
+
                 }
             })
 

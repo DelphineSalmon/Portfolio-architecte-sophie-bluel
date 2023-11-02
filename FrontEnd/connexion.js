@@ -21,31 +21,7 @@ form.addEventListener("submit", (event) => {
         password,
     };
     connect(user);
-    // Récupération des identifiants depuis le ficher JSON//
-    /*
-    fetch('http://localhost:5678/api/users/login',{
-        method:'POST',
-        headers:{'Content-Type': 'application/json'},
-        //body:`{"email": "${email}","password": "${password}"}`
-        body: JSON.stringify(user)
-    })
-    .then(response=>  response.json())
-    .then(data =>{
-        if(data.token){
-            window.localStorage.setItem("token", data.token)
-            window.location.href ='/index.html'
-        }else{
-            let messageError = "Erreur de connection"
-            if(data.message === "user not found"){
-                messageError = "Erreur E-mail"
-            }
-            let errorMessageElement = document.querySelector(".error-message")
-            console.log(data)
-            errorMessageElement.innerHTML = messageError
-                
-        }
-            
-    })*/
+    
 });
 
 baliseEMail.addEventListener("change", () => {
@@ -60,7 +36,7 @@ const connect = async (user) => {
         },
         body: JSON.stringify(user),
     };
-
+// Récupération des identifiants depuis le ficher JSON//
     const response = await fetch(
         "http://localhost:5678/api/users/login",
         options

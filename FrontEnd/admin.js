@@ -1,5 +1,5 @@
 import { deleteWork } from "./delete.js";
-import { displayWorks, displayWorksModale } from "./works.js";
+import { displayWorks, displayWorksModale, works } from "./works.js";
 //recuperation token dans localstorage
 
 const token = window.localStorage.getItem("token");
@@ -27,7 +27,62 @@ if (token) {
         const dialog = modaleGaleriePhoto(token);
         dialog.showModal();
     });
+    // j empêche le comportement par défaut de la 2eme modale
+    const form = document.querySelector(".form");
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const body = new FormData(form);
+        body.get("title");
+        const addTilte = body.get("title");
+        const selectCategorie = body.get("category");
+        const selectImage = body.get("image");
+
+        //affichage message erreur
+        if (
+            addTilte === "" ||
+            selectCategorie === "" ||
+            selectImage.size === 0
+        ) {
+            let messageError = "Saisie incorrecte";
+            let messageErrorElement = document.querySelector(".error-message");
+            messageErrorElement.innerText = messageError;
+        } else {
+            // Reponse API
+
+            const newWork = postProjet(body, token);
+            newWork.then((result) => {
+                if (result) {
+                    works.push(result);
+                    console.log(result);
+                    displayWorks(".gallery");
+                }
+            });
+        }
+    });
+    const uploadButton = document.querySelector(".btn-add-photo");
+
+    //Upload Button
+    uploadButton.addEventListener("change", () => {
+        Array.from(uploadButton.files).forEach((file) => {
+            fileHandler(file, file.name, file.type);
+        });
+    });
 }
+const fileHandler = (file, name, type) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+        //image and file name
+        let img = document.createElement("img");
+        img.classList.add("photo");
+        img.src = reader.result;
+        let imageDisplay = document.querySelector(".add-photo");
+        imageDisplay.innerHTML = "";
+        imageDisplay.appendChild(img);
+    };
+};
+
+//Ouverture et fermeture Modale ajout photo
 function modaleAddPhoto(token) {
     const dialogAddElement = document.getElementById("dialog-box-add");
     const iconeCloseElement = document.querySelector(".icone-close");
@@ -51,7 +106,7 @@ function modaleAddPhoto(token) {
     return dialogAddElement;
 }
 
-//création modale
+//création premiere modale
 function modaleGaleriePhoto(token) {
     const modaleElement = document.getElementById("dialog-box");
     const dialogElement = document.createElement("dialog");
@@ -88,6 +143,7 @@ function modaleGaleriePhoto(token) {
     const linkSuppElement = document.createElement("a");
     linkSuppElement.innerText = "supprimer la gallerie";
 
+    //Rattachement de nos balises au DOM
     modaleElement.appendChild(dialogElement);
     dialogElement.appendChild(dialogContentElement);
     dialogContentElement.appendChild(closeElement);
@@ -115,3 +171,16 @@ function modaleGaleriePhoto(token) {
 
     return dialogElement;
 }
+
+// Reponse API
+const postProjet = async (body, token) => {
+    const option = {
+        method: "POST",
+        headers: {
+            Authorization: "Bearer " + token,
+        },
+        body: body,
+    };
+    const response = await fetch("http://localhost:5678/api/works", option);
+    return await response.json();
+};

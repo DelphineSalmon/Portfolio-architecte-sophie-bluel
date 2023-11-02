@@ -106,24 +106,28 @@
 							<a href="#" class="icone-close"><i class="fa-solid fa-xmark fa-xl"></i></a>
 						</div>
 						<h2>Ajout photo</h2>
-						<div class="add-photo">
-							<p class="icone"><i class="fa-regular fa-image"></i></p>
-							<button class="btn-add-photo">+ Ajouter photo</button>
-							<p>jpg, png: 4mo max</p>
-						</div>
-						<div class="form">
+						
+						<form enctype="multipart/form-data" action="#" method="post" class="form" id="formAdd">
+							<input type="file" name="image" accept="image/*" class="btn-add-photo" id="image"/>
+							<div class="add-photo">
+								<p class="icone"><i class="fa-regular fa-image"></i></p>
+								<label class="btn-add-photo" for="image">+ Ajouter photo</label>
+								<p>jpg, png: 4mo max</p>
+							</div>
 							<label for="title">Titre</label>
 							<input type="text" id="title" name="title" required >
 							<label for="categories-select">Catégorie</label>
-							<select name="choix-categorie" id="choix-categorie">
+							<select name="category" id="choix-categorie">
 								<option value =""></option>
-								<option value="objets">Objets</option>
-								<option value="appartements">Appartements</option>
-								<option value="hotel et Restaurants">Hotels & Restaurants</option>
-							</select>	
-						</div>
-						<div class="line-decor"></div>
-						<button class="btn-valid">Valider</button>
+								<option value="1">Objets</option>
+								<option value="2">Appartements</option>
+								<option value="3">Hotels & Restaurants</option>
+							</select>
+							<div class="line-decor"></div>
+							<div class="error-message"></div>
+							<input type="submit" class="btn-valid" value="Valider"/>	
+						</form>
+						
 					</div>
 				</dialog>
 			
