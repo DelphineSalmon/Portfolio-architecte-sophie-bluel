@@ -2,7 +2,7 @@ import { displayWorks } from "./works.js";
 
 // Récupération des projets depuis le ficher JSON//
 const reponse = await fetch("http://localhost:5678/api/categories");
-const categories = await reponse.json();
+export const categories = await reponse.json();
 
 //Affichage des filtres//
 const sectionFiltres = document.querySelector(".filters");

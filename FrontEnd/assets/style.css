@@ -543,7 +543,14 @@ dialog .i-croix {
 	background-color: transparent;
 	border: none;
 }
-
+.error-image{
+	color: #FF3333;
+	text-align: center;
+}
+form .error-message{
+	color: #FF3333;
+	text-align: center;
+}
 .add-photo {
 	height: 200px;
     background-color: #e8f1f6;

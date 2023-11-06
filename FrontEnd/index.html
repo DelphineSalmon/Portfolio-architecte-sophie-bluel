@@ -95,41 +95,8 @@
                     <input type="submit" value="Envoyer" />
                 </form>
             </section>
-			<!--Premiere Modale-->
-			<div id="dialog-box"></div>
-			<!--Modale ajout projet-->
-			
-				<dialog id="dialog-box-add">
-					<div>
-						<div class="redirection">
-							<a href="#" class="icone-precedant"><i class="fa-solid fa-arrow-left fa-xl"></i></a>
-							<a href="#" class="icone-close"><i class="fa-solid fa-xmark fa-xl"></i></a>
-						</div>
-						<h2>Ajout photo</h2>
-						
-						<form enctype="multipart/form-data" action="#" method="post" class="form" id="formAdd">
-							<input type="file" name="image" accept="image/*" class="btn-add-photo" id="image"/>
-							<div class="add-photo">
-								<p class="icone"><i class="fa-regular fa-image"></i></p>
-								<label class="btn-add-photo" for="image">+ Ajouter photo</label>
-								<p>jpg, png: 4mo max</p>
-							</div>
-							<label for="title">Titre</label>
-							<input type="text" id="title" name="title" required >
-							<label for="categories-select">Catégorie</label>
-							<select name="category" id="choix-categorie">
-								<option value =""></option>
-								<option value="1">Objets</option>
-								<option value="2">Appartements</option>
-								<option value="3">Hotels & Restaurants</option>
-							</select>
-							<div class="line-decor"></div>
-							<div class="error-message"></div>
-							<input type="submit" class="btn-valid" value="Valider"/>	
-						</form>
-						
-					</div>
-				</dialog>
+			<!-- Modale-->
+			<div id="dialog-box"></div>	
 			
         </main>
 
