@@ -1,14 +1,14 @@
-import { deleteWork } from "./delete.js";
 import { displayWorks, displayWorksModale, works } from "./works.js";
 import { categories } from "./categories.js";
-//recuperation token dans localstorage
 
+//recuperation token dans localstorage
 const token = window.localStorage.getItem("token");
 const logoutElement = document.querySelector(".log");
 const modifElement = document.querySelector(".modif");
 const modifProfilElement = document.querySelector(".modif-p");
 const barreEditElement = document.getElementById("barre-edit");
 
+//création page d'accueil en mode d'edition administrateur
 if (token) {
     logoutElement.innerHTML = '<a href="#">Logout</a>';
     modifElement.innerHTML =
@@ -22,38 +22,40 @@ if (token) {
         window.localStorage.removeItem("token");
         window.location.reload();
     });
-    //Ouverture modale
 
+    //Ouverture modale
     modifElement.addEventListener("click", () => {
         const dialog = modaleGaleriePhoto(token);
         dialog.showModal();
     });
-    
-    
-    
 }
-const fileHandler = (file, name, type) => {
+// Affichage de la photo ou message erreur si mauvais fichier
+const fileHandler = (file, type) => {
     const errorImageELement = document.querySelector(".error-image");
     errorImageELement.innerText = "";
     if (type.split("/")[0] !== "image") {
         //Error type fichier
         errorImageELement.innerText = "Veuillez télécharger un ficher image";
     } else {
-        let reader = new FileReader();
+        const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onloadend = () => {
             //affichage image lors d'un ajout de projet
-            let img = document.createElement("img");
+            const img = document.createElement("img");
             img.classList.add("photo");
             img.src = reader.result;
-            let imageDisplay = document.querySelector(".add-photo");
+            const imageDisplay = document.querySelector(".add-photo");
             imageDisplay.innerHTML = "";
             imageDisplay.appendChild(img);
         };
     }
 };
 
-//Ouverture et fermeture Modale ajout photo
+/**
+ * Ouverture et fermeture Modale ajout photo
+ * @param {*} token identification
+ * @returns l'element html de la boite de dialog 
+ */
 function modaleAddPhoto(token) {
     //Creation balise seconde modale
     const secondDialogElement = document.getElementById("dialog-box");
@@ -83,12 +85,12 @@ function modaleAddPhoto(token) {
     formElement.classList.add("form");
     formElement.id = "formAdd";
     formElement.enctype = "multipart/form-data";
-    
+
     const errorImageElement = document.createElement("div");
     errorImageElement.classList.add("error-image");
-    
-     // j empêche le comportement par défaut de la 2eme modale
-     formElement.addEventListener("submit", (event) => {
+
+    // j empêche le comportement par défaut de la 2eme modale
+    formElement.addEventListener("submit", (event) => {
         event.preventDefault();
         const body = new FormData(formElement);
         body.get("title");
@@ -102,18 +104,21 @@ function modaleAddPhoto(token) {
             selectCategorie === "" ||
             selectImage.size === 0
         ) {
-            let messageError = "Saisie incorrecte";
-            let messageErrorElement = document.querySelector(".error-message");
+            const messageError = "Saisie incorrecte";
+            const messageErrorElement =
+                document.querySelector(".error-message");
             messageErrorElement.innerText = messageError;
         } else {
             // Reponse API
-
             const newWork = postProjet(body, token);
             newWork.then((result) => {
                 if (result) {
                     works.push(result);
-                    console.log(result);
                     displayWorks(".gallery");
+                    const dialog = modaleGaleriePhoto(token);
+                    dialog.showModal();
+                    dialogAddElement.remove();
+                    
                 }
             });
         }
@@ -130,10 +135,10 @@ function modaleAddPhoto(token) {
     visuelBoutonAddImageElement.htmlFor = "image";
     visuelBoutonAddImageElement.innerText = "+ Ajouter photo";
 
-     //Upload Button
-     boutonAjoutPhotoElement.addEventListener("change", () => {
+    //Upload Button
+    boutonAjoutPhotoElement.addEventListener("change", () => {
         Array.from(boutonAjoutPhotoElement.files).forEach((file) => {
-            fileHandler(file, file.name, file.type);
+            fileHandler(file, file.type);
         });
     });
 
@@ -149,7 +154,7 @@ function modaleAddPhoto(token) {
     pElement.innerText = "jpg, png: 4mo max";
 
     const labelTitleElement = document.createElement("label");
-    labelTitleElement.htmlFor= "title";
+    labelTitleElement.htmlFor = "title";
     labelTitleElement.innerText = "Titre";
 
     const saisieTextElement = document.createElement("input");
@@ -158,18 +163,8 @@ function modaleAddPhoto(token) {
     saisieTextElement.name = "title";
 
     const labelCategorieElement = document.createElement("label");
-    labelCategorieElement.htmlFor= "categories-select";
+    labelCategorieElement.htmlFor = "categories-select";
     labelCategorieElement.innerText = "Catégorie";
-
-    const selectCategorieElement = document.createElement("select");
-    selectCategorieElement.name = "category";
-    selectCategorieElement.id = "choix-categorie";
-    //option//
-    const firstOptionElement = new Option("", "", true);
-    const optionElement = categories.map(
-        (categorie) => new Option(categorie.name, categorie.id)
-    );
-    optionElement.unshift(firstOptionElement);
 
     const decoLineElement = document.createElement("div");
     decoLineElement.classList.add("line-decor");
@@ -190,32 +185,31 @@ function modaleAddPhoto(token) {
     lienPrecedantElement.appendChild(iconePrecedantElement);
     lienCloseElement.appendChild(iconeCloseElement);
 
-    divInvisibleElement.appendChild(titleElement);
+    divInvisibleElement.append(titleElement, formElement);
 
-    divInvisibleElement.appendChild(formElement);
-    formElement.appendChild(errorImageElement);
-    formElement.appendChild(boutonAjoutPhotoElement);
-    formElement.appendChild(addPhotoElement);
-    addPhotoElement.appendChild(iconeElement);
+    formElement.append(
+        errorImageElement,
+        boutonAjoutPhotoElement,
+        addPhotoElement
+    );
+    addPhotoElement.append(iconeElement, visuelBoutonAddImageElement, pElement);
     iconeElement.appendChild(iconePhotoElement);
-    addPhotoElement.appendChild(visuelBoutonAddImageElement);
-    addPhotoElement.appendChild(pElement);
 
-    formElement.appendChild(labelTitleElement);
-    formElement.appendChild(saisieTextElement);
-
-    formElement.appendChild(labelCategorieElement);
-    formElement.appendChild(selectCategorieElement);
-
-    selectCategorieElement.append(...optionElement);
-
-    formElement.appendChild(decoLineElement);
-    formElement.appendChild(errorMessageElement);
-    formElement.appendChild(btnValiderElement);
+    formElement.append(
+        labelTitleElement,
+        saisieTextElement,
+        labelCategorieElement,
+        selectCategorieElement(),
+        decoLineElement,
+        errorMessageElement,
+        btnValiderElement
+    );
 
     iconeCloseElement.addEventListener("click", () => {
         dialogAddElement.remove();
     });
+
+    //Fermeture 2eme modale
     dialogAddElement.addEventListener("click", (event) => {
         if (event.target.id === "dialog-box-add") {
             dialogAddElement.remove();
@@ -230,41 +224,28 @@ function modaleAddPhoto(token) {
 
     return dialogAddElement;
 }
+/**
+ * Construction du select dans la seconde modale
+ * @returns retourne l element HTML du select des categories 
+ */
+function selectCategorieElement() {
+    const selectCategorieElement = document.createElement("select");
+    selectCategorieElement.name = "category";
+    selectCategorieElement.id = "choix-categorie";
+    //option//
+    const firstOptionElement = new Option("", "", true);
+    const optionElement = categories.map(
+        (categorie) => new Option(categorie.name, categorie.id)
+    );
+    optionElement.unshift(firstOptionElement);
+    selectCategorieElement.append(...optionElement);
+    return selectCategorieElement;
+}
 
-/*<dialog id="dialog-box-add">
-					<div>
-						<div class="redirection">
-							<a href="#" class="icone-precedant"><i class="fa-solid fa-arrow-left fa-xl"></i></a>
-							<a href="#" class="icone-close"><i class="fa-solid fa-xmark fa-xl"></i></a>
-						</div>
-						<h2>Ajout photo</h2>
-						
-						<form enctype="multipart/form-data" action="#" method="post" class="form" id="formAdd">
-							<div class="error-image"></div>
-							<input type="file" name="image" accept="image/*" class="btn-add-photo" id="image"/>
-							<div class="add-photo">
-								<p class="icone"><i class="fa-regular fa-image"></i></p>
-								<label class="btn-add-photo" for="image">+ Ajouter photo</label>
-								<p>jpg, png: 4mo max</p>
-							</div>
-							<label for="title">Titre</label>
-							<input type="text" id="title" name="title" required >
-							<label for="categories-select">Catégorie</label>
-							<select name="category" id="choix-categorie">
-								<option value =""></option>
-								<option value="1">Objets</option>
-								<option value="2">Appartements</option>
-								<option value="3">Hotels & Restaurants</option>
-							</select>
-							<div class="line-decor"></div>
-							<div class="error-message"></div>
-							<input type="submit" class="btn-valid" value="Valider"/>	
-						</form>
-						
-					</div>
-				</dialog>-->*/
-
-//création premiere modale
+/**
+ * création premiere modale
+ * @returns retourne l'element HTML de la modale galerie photo
+ */
 function modaleGaleriePhoto(token) {
     //création des balises
     const modaleElement = document.getElementById("dialog-box");

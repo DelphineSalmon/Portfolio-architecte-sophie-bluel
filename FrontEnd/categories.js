@@ -6,13 +6,16 @@ export const categories = await reponse.json();
 
 //Affichage des filtres//
 const sectionFiltres = document.querySelector(".filters");
-
 displayFilter({ name: "Tous" }, true);
 
 for (const category of categories) {
     displayFilter(category);
 }
-
+/**
+ * création des boutons filtres
+ * @param {*} category objet categorie
+ * @param {*} first condition si c'est le 1er élément 
+ */
 function displayFilter(category, first) {
     const token = window.localStorage.getItem("token");
     if (!token) {
@@ -23,11 +26,11 @@ function displayFilter(category, first) {
         if(first) {
             categoryElement.classList.add("button-filters-click")
         }
-
+//changement couleur au click
         categoryElement.addEventListener("click", function (event) {
             displayWorks(".gallery",category.id);
-            let buttonsFiltersClick = document.querySelectorAll(".button-filters-click")
-            for( let element of buttonsFiltersClick ){
+            const buttonsFiltersClick = document.querySelectorAll(".button-filters-click")
+            for( const element of buttonsFiltersClick ){
                 element.classList.remove("button-filters-click")
             }
            categoryElement.classList.add("button-filters-click")

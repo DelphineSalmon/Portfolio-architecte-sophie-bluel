@@ -1,10 +1,13 @@
-let baliseEMail = document.getElementById("email");
-let balisePassword = document.getElementById("password");
-let form = document.querySelector(".form-connexion");
+const baliseEMail = document.getElementById("email");
+const balisePassword = document.getElementById("password");
+const form = document.querySelector(".form-connexion");
 
-//Cette fonction prend un email en paramètre et valide qu'il est au bon format.
+/**
+ * Cette fonction prend un email en paramètre et valide qu'il est au bon format.
+ * @param {*} balise est le mail a vérifier
+ */
 function verifierEmail(balise) {
-    let emailRegExp = new RegExp("[a-z._-]+@[a-z._-]+\\.[a-z._-]+");
+    const emailRegExp = new RegExp("[a-z._-]+@[a-z._-]+\\.[a-z._-]+");
     if (!emailRegExp.test(balise.value)) {
         throw new Error("L'email n'est pas valide.");
     }
@@ -12,7 +15,7 @@ function verifierEmail(balise) {
 // j empêche le comportement par défaut
 form.addEventListener("submit", (event) => {
     event.preventDefault();
-    // Je récupère l EMail et affiche leur valeur
+    // Je récupère l EMail et password envoie API
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
@@ -27,7 +30,7 @@ form.addEventListener("submit", (event) => {
 baliseEMail.addEventListener("change", () => {
     verifierEmail(baliseEMail);
 });
-
+//Envoie une requete POST sur API
 const connect = async (user) => {
     const options = {
         method: "POST",
@@ -36,20 +39,19 @@ const connect = async (user) => {
         },
         body: JSON.stringify(user),
     };
-// Récupération des identifiants depuis le ficher JSON//
+// Récupération du TOKEN//
     const response = await fetch(
         "http://localhost:5678/api/users/login",
         options
     );
     const data = await response.json();
-
+//Si Token valide connexion ok, sinon message d'erreur
     if (data.token) {
         window.localStorage.setItem("token", data.token);
         window.location.href = "/index.html";
     } else {
-        let messageError = "Erreur de connection";
-        let errorMessageElement = document.querySelector(".error-message");
-        console.log(data);
+        const messageError = "Erreur de connexion";
+        const errorMessageElement = document.querySelector(".error-message");
         errorMessageElement.innerText = messageError;
     }
 };
